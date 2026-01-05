@@ -1,0 +1,368 @@
+:root {
+    --primary: #ff9a9e;
+    --primary-dark: #ff6b6b;
+    --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.8);
+    --text-main: #4a4a4a;
+    --text-light: #888;
+    --shadow-soft: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background-image: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
+    height: 100vh;
+    overflow: hidden;
+    color: var(--text-main);
+}
+
+/* --- BACKGROUND HEARTS ANIMATION --- */
+.bg-hearts {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;
+}
+.floating-heart {
+    position: absolute; bottom: -20px; color: rgba(255, 255, 255, 0.6);
+    animation: floatUp 8s linear infinite; font-size: 20px;
+}
+@keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+}
+
+/* --- MANAGE SCREENS --- */
+.screen {
+    position: absolute; width: 100%; height: 100%;
+    display: flex; flex-direction: column; align-items: center;
+    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    opacity: 0; pointer-events: none; transform: scale(0.9);
+}
+.screen.active {
+    opacity: 1; pointer-events: auto; transform: scale(1); z-index: 10;
+}
+
+/* --- 1. ENVELOPE (CSS VẼ PHONG BÌ 3D) --- */
+#intro-screen { justify-content: center; }
+
+.envelope-wrapper {
+    position: relative; cursor: pointer;
+    animation: floatEnvelope 3s ease-in-out infinite;
+}
+@keyframes floatEnvelope {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+.envelope {
+    width: 300px; height: 200px; background: var(--primary);
+    position: relative; border-radius: 0 0 10px 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+.envelope .front {
+    position: absolute; width: 0; height: 0; z-index: 3;
+}
+.envelope .flap {
+    border-left: 150px solid transparent; border-right: 150px solid transparent;
+    border-top: 110px solid var(--primary-dark); top: 0; left: 0;
+    transform-origin: top; transition: transform 0.6s 0.2s; z-index: 4;
+}
+.envelope .pocket {
+    border-left: 150px solid var(--primary); border-right: 150px solid var(--primary);
+    border-bottom: 100px solid #ff8589; bottom: 0; left: 0; border-radius: 0 0 10px 10px;
+}
+.letter {
+    position: absolute; background: #fff; width: 260px; height: 180px;
+    top: 10px; left: 20px; border-radius: 10px; transition: transform 0.6s 0.8s;
+    display: flex; justify-content: center; align-items: center; z-index: 1;
+    font-family: 'Dancing Script', cursive; font-size: 2rem; color: var(--primary-dark);
+}
+.seal {
+    position: absolute; top: 70px; left: 50%; transform: translate(-50%, -50%);
+    background: #e02424; width: 40px; height: 40px; border-radius: 50%; z-index: 5;
+    display: flex; align-items: center; justify-content: center; color: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: opacity 0.4s;
+}
+.envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 1; }
+.envelope-wrapper.open .seal { opacity: 0; }
+.envelope-wrapper.open .letter { transform: translateY(-80px); z-index: 5; }
+
+.intro-text { margin-top: 50px; text-align: center; color: var(--text-main); font-weight: 600; }
+
+/* --- 2. LIST SCREEN (GLASSMORPHISM) --- */
+#list-screen { padding: 20px 15px; display: block; overflow-y: scroll; scroll-behavior: smooth; }
+
+/* --- LDR HEADER STYLE (YÊU XA) --- */
+.ldr-header {
+    text-align: center; margin: 20px 0 30px;
+    background: rgba(255, 255, 255, 0.5); /* Kính mờ đục hơn chút */
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    padding: 25px 15px; border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255,255,255,0.6);
+}
+
+.couple-avatar img {
+    width: 90px; height: 90px; border-radius: 50%;
+    border: 4px solid #fff; box-shadow: 0 5px 15px rgba(255,100,100,0.2);
+    margin-bottom: 10px;
+}
+
+.love-title {
+    font-family: 'Dancing Script', cursive; font-size: 2.4rem;
+    color: var(--primary-dark); margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+}
+
+/* WIDGET KHOẢNG CÁCH */
+.distance-widget {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 25px; padding: 0 10px;
+}
+
+.location {
+    display: flex; flex-direction: column; align-items: center;
+    width: 30%; color: var(--text-main);
+}
+.city-name { font-weight: 800; font-size: 1.1rem; color: var(--primary-dark); }
+.time { font-size: 0.85rem; color: #666; font-family: 'Nunito', sans-serif; margin: 2px 0; }
+.weather-icon { font-size: 1.2rem; color: #ffbc00; } /* Màu vàng cho nắng */
+.location.right .weather-icon { color: #7f8fa6; } /* Màu xám cho mây HN */
+
+/* ĐƯỜNG BAY & MÁY BAY */
+.distance-visual {
+    width: 40%; position: relative; display: flex; flex-direction: column; align-items: center;
+}
+.km-text { font-size: 0.7rem; color: #999; margin-bottom: 5px; letter-spacing: 1px; }
+.line {
+    width: 100%; height: 2px; background: #ddd; position: relative; border-radius: 2px;
+}
+.plane {
+    position: absolute; top: 50%; left: 0;
+    transform: translate(0, -50%); font-size: 14px; color: var(--primary);
+    animation: flyPlane 4s ease-in-out infinite; /* Máy bay bay qua lại */
+}
+.heart-beat {
+    position: absolute; top: 10px; font-size: 12px; color: red;
+    background: #fff; padding: 2px; border-radius: 50%;
+    animation: pulseHeart 1s infinite;
+}
+
+/* ĐẾM NGÀY */
+.love-counter p { font-size: 0.9rem; color: #666; margin-bottom: 5px; }
+.counter-box {
+    display: inline-block; background: #fff; padding: 5px 20px;
+    border-radius: 50px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.counter-box span {
+    font-size: 1.8rem; font-weight: 800; color: #ff4757; font-family: 'Nunito';
+}
+
+/* ANIMATIONS */
+@keyframes flyPlane {
+    0% { left: 0; transform: translate(0, -50%) rotate(0deg); }
+    48% { transform: translate(0, -50%) rotate(0deg); }
+    50% { left: 100%; transform: translate(-100%, -50%) rotate(0deg); }
+    52% { transform: translate(-100%, -50%) rotate(180deg); } /* Quay đầu */
+    98% { transform: translate(-100%, -50%) rotate(180deg); }
+    100% { left: 0; transform: translate(0, -50%) rotate(180deg); }
+}
+
+@keyframes pulseHeart {
+    0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); }
+}
+.avatar-frame img {
+    width: 80px; height: 80px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+.love-title { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--primary-dark); margin: 5px 0; }
+.love-days { font-size: 0.9rem; color: var(--text-light); }
+.love-days span { font-weight: 800; color: #ff4757; font-size: 1.2rem; }
+
+.timeline-container { padding-bottom: 50px; }
+.diary-entry {
+    display: flex; align-items: center; background: var(--glass-bg);
+    backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+    padding: 15px; margin-bottom: 20px; border-radius: 16px;
+    border: 1px solid var(--glass-border); box-shadow: var(--shadow-soft);
+    transition: transform 0.2s; cursor: pointer;
+}
+.diary-entry:active { transform: scale(0.97); }
+
+.entry-date {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: #fff; padding: 8px 12px; border-radius: 12px; margin-right: 15px;
+    min-width: 60px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.day { font-size: 1.4rem; font-weight: 800; color: var(--text-main); }
+.month { font-size: 0.7rem; text-transform: uppercase; color: var(--text-light); }
+.entry-preview h3 { font-size: 1.1rem; margin-bottom: 4px; color: var(--text-main); }
+.entry-preview p { font-size: 0.9rem; color: var(--text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
+.entry-icon { margin-left: auto; color: var(--primary); font-size: 1.2rem; }
+
+/* --- 3. MODAL (PAPER FLIP) --- */
+.modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7); backdrop-filter: blur(5px);
+    z-index: 100; display: none; align-items: center; justify-content: center;
+    perspective: 1500px;
+}
+.modal.show { display: flex; animation: fadeIn 0.4s; }
+
+.paper-container {
+    width: 90%; max-width: 400px; height: 65vh; position: relative;
+    transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.paper-container.flipped { transform: rotateY(180deg); }
+
+.paper-face {
+    position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+    background: #fff url('https://www.transparenttextures.com/patterns/cream-paper.png'); /* Texture giấy */
+    border-radius: 12px; padding: 30px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+/* Mặt trước */
+.front-face { display: flex; flex-direction: column; align-items: center; justify-content: center; border: 8px solid #f0f0f0; }
+.stamp {
+    width: 80px; height: 100px; border: 2px dashed #ddd; display: flex;
+    align-items: center; justify-content: center; font-size: 2rem; color: #ddd;
+    position: absolute; top: 20px; right: 20px; transform: rotate(10deg);
+}
+#modalDate { font-family: 'Dancing Script'; font-size: 3rem; color: var(--primary-dark); }
+.instruction { margin-top: 50px; color: #aaa; font-size: 0.9rem; animation: pulse 2s infinite; }
+
+/* Mặt sau */
+.back-face { transform: rotateY(180deg); overflow-y: auto; text-align: left; line-height: 1.8; }
+.paper-content { font-family: 'Patrick Hand'; font-size: 1.3rem; color: #333; }
+.sign { margin-top: 30px; text-align: right; font-family: 'Dancing Script'; font-size: 1.5rem; color: var(--primary); }
+
+.close-btn {
+    position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.2);
+    border: none; color: #fff; font-size: 1.5rem; width: 40px; height: 40px;
+    border-radius: 50%; cursor: pointer; z-index: 101;
+}
+
+@keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* --- CẬP NHẬT LOGO NG --- */
+/* Thêm import font sang trọng Playfair Display vào đầu file CSS nếu chưa có */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&display=swap');
+
+.brand-logo {
+    font-family: 'Playfair Display', serif; /* Font kiểu tạp chí thời trang */
+    font-size: 4rem; /* Chữ cực to */
+    font-weight: 700;
+    font-style: italic;
+    color: var(--primary-dark);
+    margin: 10px 0 0px;
+    letter-spacing: -2px; /* Dính chữ vào nhau chút cho nghệ thuật */
+    line-height: 1;
+    text-shadow: 2px 2px 0px rgba(255,255,255,0.8);
+}
+
+.sub-slogan {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1rem;
+    color: #888;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+/* --- CẬP NHẬT ICON DÒNG SÔNG --- */
+.weather-icon {
+    font-size: 1.2rem;
+    margin-top: 5px;
+}
+
+/* Màu nắng Sài Gòn */
+.location.left .weather-icon { 
+    color: #ffbc00; 
+} 
+
+/* Màu xanh Dòng sông Hà Nội */
+.river-icon {
+    color: #3498db; /* Màu xanh nước biển */
+    animation: flowWater 3s ease-in-out infinite;
+}
+
+/* Hiệu ứng sóng nước dập dềnh */
+@keyframes flowWater {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+/* --- CHỈNH LẠI AVATAR CHÚT CHO HỢP VỚI LOGO --- */
+.couple-avatar img {
+    border: 1px solid var(--primary); /* Viền mảnh sang hơn */
+    padding: 3px; /* Tạo khoảng hở giữa ảnh và viền */
+    box-shadow: none;
+}
+
+/* --- THÊM STYLE CHO TÊN DƯỚI ICON --- */
+.name-tag {
+    display: block;
+    font-family: 'Patrick Hand', cursive; /* Font viết tay */
+    font-size: 0.9rem;
+    color: var(--primary-dark);
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+/* Chỉnh lại icon cho cân đối khi có thêm tên */
+.icon-wrapper {
+    height: 30px; /* Cố định chiều cao để không bị lệch */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- STYLE CHO ICON DÒNG SÔNG SVG --- */
+.river-svg {
+    width: 35px;
+    height: 35px;
+    filter: drop-shadow(0 0 3px rgba(0, 168, 255, 0.3)); /* Phát sáng nhẹ */
+}
+
+/* Animation cho lớp sóng sau (trôi chậm) */
+.wave-back {
+    animation: waveFlow 4s ease-in-out infinite alternate;
+    opacity: 0.6; /* Mờ hơn để tạo chiều sâu */
+}
+
+/* Animation cho lớp sóng trước (trôi nhanh hơn chút) */
+.wave-front {
+    animation: waveFlow 3s ease-in-out infinite alternate-reverse;
+}
+
+/* Định nghĩa chuyển động uốn lượn */
+@keyframes waveFlow {
+    0% { transform: translateX(-1px) translateY(0); }
+    100% { transform: translateX(1px) translateY(-1px); }
+}
+
+/* Chỉnh lại icon Mặt trời bên kia một chút cho cân xứng với icon mới */
+.location.left .weather-icon {
+    font-size: 1.5rem; /* Tăng kích thước mặt trời lên xíu cho bằng dòng sông */
+}
+
+/* --- STYLE CHO GIỜ (TIME TAG) --- */
+.time-tag {
+    font-size: 0.8rem;
+    color: #fff;
+    background-color: var(--primary-dark); /* Nền màu đỏ/hồng đậm */
+    padding: 2px 6px;
+    border-radius: 8px;
+    margin-top: 5px;
+    font-weight: 600;
+    font-family: 'Nunito', sans-serif;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Chỉnh lại ô ngày tháng chút cho cân đối */
+.entry-date {
+    min-width: 70px; /* Rộng hơn xíu để chứa giờ */
+    padding: 10px 5px;
+}

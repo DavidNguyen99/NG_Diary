@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Love Diary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nunito:wght@300;400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+    </audio>
+
+    <div class="bg-hearts" id="bgHearts"></div>
+
+    <section id="intro-screen" class="screen active">
+        <div class="envelope-wrapper" id="envelopeBtn">
+            <div class="envelope">
+                <div class="front flap"></div>
+                <div class="front pocket"></div>
+                <div class="letter">
+                    <div class="text">Gửi Em ❤️</div>
+                </div>
+                <div class="seal"><i class="fas fa-heart"></i></div>
+            </div>
+        </div>
+        <div class="intro-text">
+            <p>Có một bí mật anh muốn kể...</p>
+            <small>(Chạm vào phong bì để mở)</small>
+        </div>
+    </section>
+
+    <section id="list-screen" class="screen">
+        <header class="ldr-header">
+    <div class="couple-avatar">
+        <img src="https://ui-avatars.com/api/?name=N+G&background=ff9a9e&color=fff&size=128&font-size=0.5" alt="NG">
+    </div>
+    <p class="sub-slogan">Nhật ký những ngày xa em</p>
+    
+    <div class="distance-widget">
+        <div class="location left">
+            <span class="city-name">Sài Gòn</span>
+            <span class="time" id="saigonTime">--:--</span>
+            <div class="icon-wrapper" title="Nhật - Mặt trời của em">
+                <i class="fas fa-sun weather-icon"></i>
+            </div>
+            <small class="name-tag">Nhật</small> </div>
+
+        <div class="distance-visual">
+            <span class="km-text">1,600 km</span>
+            <div class="line">
+                <div class="plane"><i class="fas fa-plane"></i></div>
+            </div>
+            <div class="heart-beat"><i class="fas fa-heart"></i></div>
+        </div>
+
+        <div class="location right">
+    <span class="city-name">Hà Nội</span>
+    <span class="time" id="hanoiTime">--:--</span>
+    
+    <div class="icon-wrapper" title="Giang - Dòng sông của anh">
+        <svg class="river-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 13C4.5 12 6.5 15 9 15C11.5 15 13.5 12 16 12C18.5 12 20.5 14 22 13" 
+                  stroke="#81ecec" stroke-width="2" stroke-linecap="round" class="wave-back"/>
+            
+            <path d="M2 15C4.5 14 6.5 17 9 17C11.5 17 13.5 14 16 14C18.5 14 20.5 16 22 15" 
+                  stroke="#00a8ff" stroke-width="2" stroke-linecap="round" class="wave-front"/>
+        </svg>
+    </div>
+    
+    <small class="name-tag">Giang</small>
+</div>
+    </div>
+
+    <div class="love-counter">
+        <p>Xa nhau</p>
+        <div class="counter-box">
+            <span id="daysCount">0</span> <small>days</small>
+        </div>
+    </div>
+</header>
+
+        <div class="timeline-container" id="timelineContainer"></div>
+    </section>
+
+    <div id="reader-modal" class="modal">
+        <button class="close-btn" id="closeBtn"><i class="fas fa-times"></i></button>
+        <div class="paper-container" id="paperCard">
+            <div class="paper-face front-face">
+                <div class="stamp"><i class="fas fa-paper-plane"></i></div>
+                <h2 id="modalDate">Date</h2>
+                <p class="to-label">🎀</p>
+                <div class="instruction"><i class="fas fa-hand-point-up"></i> Chạm để lật giấy</div>
+            </div>
+            <div class="paper-face back-face">
+                <div class="paper-content">
+                    <h3 id="modalTitle" style="color:var(--primary-dark); margin-bottom:10px; font-family:'Dancing Script'">Title</h3>
+                    <p id="modalContent">Nội dung...</p>
+                    <div class="sign">-- Hoàng Nhật --</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
